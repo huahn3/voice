@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">语音定时发送</string>
+    <string name="channel_name">Bot Service</string>
+    <string name="channel_desc">Background automation service</string>
+    <string name="usage_text"><![CDATA[💡 使用说明:
+1. 输出方法: 扬声器(直接播放)+按住PTT，MaidMic(需装MaidMic+Shizuku)
+2. 点「校准」浮窗拖到PTT按钮上，记下坐标
+3. 点「设置PTT按钮坐标」填入坐标
+4. 输入文字或选音频文件，设时长
+5. 点「试听」测试TTS效果
+6. 启动服务]]></string>
+</resources>

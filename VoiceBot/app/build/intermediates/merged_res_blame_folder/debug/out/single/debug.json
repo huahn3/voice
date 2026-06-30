@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/liubo/.gradle/daemon/8.11.1/com.voicebot.app-merged_res-33:/layout_activity_main.xml.flat",
+        "source": "/Users/liubo/.gradle/daemon/8.11.1/com.voicebot.app-main-35:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.voicebot.app-merged_res-33:/layout_activity_main.xml.flat",
+        "source": "com.voicebot.app-main-35:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/liubo/.gradle/daemon/8.11.1/com.voicebot.app-merged_res-33:/layout_overlay_calibrate.xml.flat",
+        "source": "/Users/liubo/.gradle/daemon/8.11.1/com.voicebot.app-main-35:/layout/overlay_calibrate.xml"
+    },
+    {
+        "merged": "/Users/liubo/.gradle/daemon/8.11.1/com.voicebot.app-merged_res-33:/drawable_ic_launcher.xml.flat",
+        "source": "/Users/liubo/.gradle/daemon/8.11.1/com.voicebot.app-main-35:/drawable/ic_launcher.xml"
+    },
+    {
+        "merged": "/Users/liubo/.gradle/daemon/8.11.1/com.voicebot.app-merged_res-33:/xml_network_security_config.xml.flat",
+        "source": "/Users/liubo/.gradle/daemon/8.11.1/com.voicebot.app-main-35:/xml/network_security_config.xml"
+    }
+]

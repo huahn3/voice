@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎯 语音定时发送"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Control Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardElevation="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="控制" android:textSize="16sp" android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnToggle"
+                        android:layout_width="0dp" android:layout_height="56dp"
+                        android:layout_weight="1" android:text="▶ 启动" android:textSize="16sp" />
+                    <Space android:layout_width="12dp" android:layout_height="1dp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCalibrate"
+                        android:layout_width="0dp" android:layout_height="56dp"
+                        android:layout_weight="1" android:text="📐 校准"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                </LinearLayout>
+                <TextView android:id="@+id/statusText" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:text="状态: 未启动"
+                    android:textSize="14sp" android:layout_marginTop="12dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Voice Message Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardElevation="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="🔊 语音消息内容" android:textSize="16sp" android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- TTS / File Toggle -->
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/sourceToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:singleSelection="true">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/sourceTts"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="文字转语音"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:textSize="12sp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/sourceFile"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="音频文件"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:textSize="12sp" />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <!-- TTS Input -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ttsInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="输入要发送的文字"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ttsText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
+                        android:text="大家好" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- File selector -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginTop="4dp">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPickAudio"
+                        android:layout_width="0dp" android:layout_height="40dp"
+                        android:layout_weight="1" android:text="📁 选择音频文件"
+                        android:textSize="11sp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                    <Space android:layout_width="8dp" android:layout_height="1dp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTestTts"
+                        android:layout_width="0dp" android:layout_height="40dp"
+                        android:layout_weight="1" android:text="🔊 试听"
+                        android:textSize="11sp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                    <Space android:layout_width="4dp" android:layout_height="1dp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCheckTts"
+                        android:layout_width="0dp" android:layout_height="40dp"
+                        android:layout_weight="1" android:text="🔧 诊断"
+                        android:textSize="11sp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                </LinearLayout>
+                <TextView android:id="@+id/selectedAudioLabel"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="未选择音频文件"
+                    android:textSize="11sp" android:textColor="#666666"
+                    android:layout_marginTop="2dp" />
+
+                <!-- Duration -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_marginTop="8dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="时长: " android:textSize="15sp" />
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/durationSlider"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:valueFrom="1" android:valueTo="30"
+                        android:stepSize="1" android:value="3" />
+                    <TextView android:id="@+id/durationLabel"
+                        android:layout_width="50dp" android:layout_height="wrap_content"
+                        android:text="3 秒" android:textSize="14sp"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <!-- Voice Method -->
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_marginTop="4dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="输出: " android:textSize="15sp" />
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/voiceMethodToggle"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:singleSelection="true">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/vmSpeaker"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="扬声器播放"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:textSize="11sp" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/vmMaidmic"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="MaidMic 注入"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:textSize="11sp" />
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Schedule Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:cardElevation="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="⏰ 定时与动作" android:textSize="16sp" android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="间隔: " android:textSize="15sp" />
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/intervalSlider"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:valueFrom="5" android:valueTo="3600"
+                        android:stepSize="1" android:value="300" />
+                    <TextView android:id="@+id/intervalLabel"
+                        android:layout_width="60dp" android:layout_height="wrap_content"
+                        android:text="5分钟" android:textSize="12sp"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:gravity="center_vertical"
+                    android:layout_marginTop="4dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="触控: " android:textSize="15sp" />
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/methodToggle"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        app:singleSelection="true">
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/methodInput"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="input"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:textSize="12sp" />
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/methodSendevent"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="sendevent"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:textSize="12sp" />
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+                </LinearLayout>
+
+                <!-- PTT Preset -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPresetPtt"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="🎤 设置 PTT 按钮坐标 (按住说话)"
+                    android:textSize="12sp"
+                    android:layout_marginTop="8dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                <TextView android:id="@+id/actionList"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:text="使用校准 + PTT 按钮设置坐标"
+                    android:textSize="12sp" android:padding="6dp"
+                    android:background="#22000000" android:layout_marginTop="6dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/actionJsonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="高级: 动作 JSON"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/actionJsonEdit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minLines="3"
+                        android:textSize="11sp"
+                        android:gravity="top" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnApplyActions"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:text="✅ 应用动作"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/usage_text"
+            android:textSize="12sp"
+            android:textColor="#666666"
+            android:padding="8dp"
+            android:lineSpacingExtra="3dp" />
+
+    </LinearLayout>
+
+</ScrollView>
