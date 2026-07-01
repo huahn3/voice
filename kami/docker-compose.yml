@@ -1,0 +1,19 @@
+services:
+  kami-app:
+    container_name: kami-card-system
+    build: .
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      # 数据库文件路径 (docker内，必须是 file: 开头)
+      DATABASE_URL: "file:/app/prisma/dev.db"
+      # 信任所有主机 (解决 UntrustedHost 报错)
+      AUTH_TRUST_HOST: "true"
+      # 请修改此密钥为随机字符串
+      NEXTAUTH_SECRET: "change_this_to_a_random_secret_string"
+      # 部署后的域名或IP，本地测试用 http://localhost:5173
+      NEXTAUTH_URL: "http://localhost:5173"
+    volumes:
+      # 持久化数据库文件到宿主机当前目录下的 prisma 文件夹
+      - ./prisma:/app/prisma

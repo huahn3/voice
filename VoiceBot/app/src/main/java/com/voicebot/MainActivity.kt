@@ -143,14 +143,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Slider>(R.id.intervalSlider).let { slider ->
-            slider.valueFrom = 5f   // 5 seconds minimum
-            slider.valueTo = 3600f  // 3600 seconds max (60 min)
+            slider.valueFrom = 5f
+            slider.valueTo = 3600f
             slider.stepSize = 1f
             slider.addOnChangeListener { _, value, _ ->
                 config = config.copy(intervalSeconds = value.toInt())
                 ConfigStore.save(this, config)
                 updateIntervalLabel()
             }
+        }
+
+        findViewById<Slider>(R.id.countdownSlider).addOnChangeListener { _, value, _ ->
+            config = config.copy(countdownSeconds = value.toInt())
+            ConfigStore.save(this, config)
+            findViewById<android.widget.TextView>(R.id.countdownLabel).text = "${value.toInt()} 秒"
         }
 
         findViewById<com.google.android.material.button.MaterialButtonToggleGroup>(R.id.methodToggle)
@@ -485,6 +491,8 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Slider>(R.id.intervalSlider).value = config.intervalSeconds.toFloat()
         updateIntervalLabel()
+        findViewById<Slider>(R.id.countdownSlider).value = config.countdownSeconds.toFloat()
+        findViewById<android.widget.TextView>(R.id.countdownLabel).text = "${config.countdownSeconds} 秒"
 
         findViewById<Slider>(R.id.durationSlider).value = config.voice.durationSeconds.toFloat()
         findViewById<android.widget.TextView>(R.id.durationLabel).text = "${config.voice.durationSeconds} 秒"

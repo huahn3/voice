@@ -3222,6 +3222,8 @@ id continuousVelocity
 id coordText
 id coordinator
 id cos
+id countdownLabel
+id countdownSlider
 id counterclockwise
 id cradle
 id currentState

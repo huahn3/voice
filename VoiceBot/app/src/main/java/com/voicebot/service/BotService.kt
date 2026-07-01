@@ -21,8 +21,10 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.voicebot.MainActivity
 import com.voicebot.R
+import com.voicebot.core.DegradationManager
 import com.voicebot.core.Shell
 import com.voicebot.core.TapEngine
+import com.voicebot.core.TimeChecker
 import com.voicebot.core.TtsEngine
 import com.voicebot.data.BotConfig
 import com.voicebot.data.ConfigStore
@@ -79,6 +81,8 @@ class BotService : Service() {
         return START_STICKY
     }
 
+    private var checkCount = 0
+
     private fun executeAndSchedule() {
         job = scope.launch {
             acquireWakeLock()
@@ -86,9 +90,35 @@ class BotService : Service() {
                 config = ConfigStore.load(this@BotService)
                 if (!config.enabled) { stop(); return@launch }
 
+                // 每执行6次（约30分钟）检查一次北京时间
+                checkCount++
+                if (checkCount % 6 == 0) {
+                    Log.d(TAG, "触发时间检查...")
+                    TimeChecker.check()
+                }
+
+                // 倒计时
+                val cd = config.countdownSeconds
+                if (cd > 0) {
+                    updateNotifText("⏳ ${cd}秒后执行...")
+                    for (i in cd downTo 1) {
+                        updateNotifText("⏳ ${i}秒后执行...")
+                        delay(1000)
+                        if (!isRunning) return@launch
+                    }
+                    config = ConfigStore.load(this@BotService)
+                    if (!config.enabled) { stop(); return@launch }
+                }
+
                 val audioFile = prepareAudio()
-                if (audioFile != null && audioFile.exists()) {
-                    sendVoiceMessage(audioFile)
+
+                // 音频截断退化（级别3+）
+                val finalFile = if (audioFile != null && DegradationManager.level >= 3) {
+                    truncateAudio(audioFile, 1000)
+                } else audioFile
+
+                if (finalFile != null && finalFile.exists()) {
+                    sendVoiceMessage(finalFile)
                 } else {
                     TapEngine.execute(config)
                 }
@@ -98,6 +128,34 @@ class BotService : Service() {
                 releaseWakeLock()
                 if (isRunning) scheduleNext()
             }
+        }
+    }
+
+    private fun truncateAudio(file: java.io.File, maxMs: Int): java.io.File? {
+        return try {
+            val truncated = java.io.File(file.parentFile, "truncated_${file.name}")
+            android.media.MediaMetadataRetriever().let { mmr ->
+                mmr.setDataSource(file.absolutePath)
+                val dur = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION)?.toIntOrNull() ?: 3000
+                mmr.release()
+                if (dur <= maxMs) return file
+            }
+            val tmp = java.io.File(file.parentFile, "tmp_truncate.wav")
+            android.media.MediaExtractor().let { ex ->
+                ex.setDataSource(file.absolutePath)
+                val format = ex.getTrackFormat(0)
+                val sampleRate = format.getInteger(android.media.MediaFormat.KEY_SAMPLE_RATE)
+                ex.release()
+                val cutFrames = sampleRate * maxMs / 1000 * 2
+                val raw = file.readBytes()
+                val headerSize = if (raw.size > 44 && raw[0].toInt() == 82) 44 else 0
+                val cutSize = (cutFrames + headerSize).coerceAtMost(raw.size)
+                tmp.writeBytes(raw.copyOf(cutSize))
+            }
+            tmp
+        } catch (e: Exception) {
+            Log.e(TAG, "截断失败", e)
+            file
         }
     }
 
@@ -285,5 +343,21 @@ class BotService : Service() {
     private fun updateNotification(intervalMin: Int) {
         val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         nm.notify(NOTIF_ID, buildNotification(true))
+    }
+
+    private fun updateNotifText(text: String) {
+        val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notif = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle("⏺ 运行中")
+            .setContentText(text)
+            .setSmallIcon(android.R.drawable.ic_media_play)
+            .setOngoing(true)
+            .setContentIntent(PendingIntent.getActivity(this, 2,
+                Intent(this, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                },
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE))
+            .build()
+        nm.notify(NOTIF_ID, notif)
     }
 }

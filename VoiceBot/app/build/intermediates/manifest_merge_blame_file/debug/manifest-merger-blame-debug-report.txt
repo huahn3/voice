@@ -8,176 +8,179 @@
 8        android:minSdkVersion="26"
 9        android:targetSdkVersion="34" />
 10
-11    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-11-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:4:5-77
-11-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:4:22-74
-12    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-12-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:5:5-89
-12-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:5:22-86
-13    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-13-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:6:5-77
-13-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:6:22-74
-14    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-14-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:7:5-78
-14-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:7:22-75
-15    <uses-permission android:name="android.permission.WAKE_LOCK" />
-15-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:8:5-68
-15-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:8:22-65
-16    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-16-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:9:5-79
-16-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:9:22-76
-17    <uses-permission android:name="android.permission.VIBRATE" />
-17-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:10:5-66
-17-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:10:22-63
-18    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-18-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:11:5-71
-18-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:11:22-68
-19    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-19-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:12:5-80
-19-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:12:22-77
-20    <uses-permission
-20-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:13:5-108
-21        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-21-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:13:22-78
-22        android:maxSdkVersion="29" />
-22-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:13:79-105
-23    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-23-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:14:5-82
-23-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:14:22-79
-24
-25    <permission
-25-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
-26        android:name="com.voicebot.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-26-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
-27        android:protectionLevel="signature" />
-27-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
-28
-29    <uses-permission android:name="com.voicebot.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-29-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
-29-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
-30
-31    <application
-31-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:16:5-45:19
-32        android:allowBackup="false"
-32-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:17:9-36
-33        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-33-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/transforms-3/440a64c1659b3784956be1ef27019da1/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
-34        android:debuggable="true"
-35        android:extractNativeLibs="false"
-36        android:icon="@drawable/ic_launcher"
-36-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:18:9-45
-37        android:label="语音定时发送"
-37-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:19:9-31
-38        android:networkSecurityConfig="@xml/network_security_config"
-38-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:23:9-69
-39        android:requestLegacyExternalStorage="true"
-39-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:24:9-52
-40        android:roundIcon="@drawable/ic_launcher"
-40-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:20:9-50
-41        android:supportsRtl="true"
-41-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:21:9-35
-42        android:theme="@style/Theme.VoiceBot" >
-42-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:22:9-46
-43        <activity
-43-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:26:9-34:20
-44            android:name="com.voicebot.MainActivity"
-44-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:27:13-41
-45            android:exported="true"
-45-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:28:13-36
-46            android:theme="@style/Theme.VoiceBot" >
-46-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:29:13-50
-47            <intent-filter>
-47-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:30:13-33:29
-48                <action android:name="android.intent.action.MAIN" />
-48-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:31:17-69
-48-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:31:25-66
-49
-50                <category android:name="android.intent.category.LAUNCHER" />
-50-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:32:17-77
-50-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:32:27-74
-51            </intent-filter>
-52        </activity>
-53
-54        <service
-54-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:36:9-39:58
-55            android:name="com.voicebot.service.BotService"
-55-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:37:13-47
-56            android:exported="false"
-56-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:38:13-37
-57            android:foregroundServiceType="specialUse" />
-57-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:39:13-55
-58        <service
-58-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:41:9-43:40
-59            android:name="com.voicebot.service.OverlayService"
-59-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:42:13-51
-60            android:exported="false" />
-60-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:43:13-37
-61
-62        <provider
-62-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/transforms-3/40af677edc9e981bf1ec9bb11c8b1d32/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
-63            android:name="androidx.startup.InitializationProvider"
-63-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/transforms-3/40af677edc9e981bf1ec9bb11c8b1d32/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
-64            android:authorities="com.voicebot.androidx-startup"
-64-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/transforms-3/40af677edc9e981bf1ec9bb11c8b1d32/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
-65            android:exported="false" >
-65-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/transforms-3/40af677edc9e981bf1ec9bb11c8b1d32/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
-66            <meta-data
-66-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/transforms-3/40af677edc9e981bf1ec9bb11c8b1d32/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
-67                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-67-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/transforms-3/40af677edc9e981bf1ec9bb11c8b1d32/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
-68                android:value="androidx.startup" />
-68-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/transforms-3/40af677edc9e981bf1ec9bb11c8b1d32/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
-69            <meta-data
-69-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/liubo/.gradle/caches/transforms-3/01096349b0936ba7f741e909295c017b/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
-70                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-70-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/liubo/.gradle/caches/transforms-3/01096349b0936ba7f741e909295c017b/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
-71                android:value="androidx.startup" />
-71-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/liubo/.gradle/caches/transforms-3/01096349b0936ba7f741e909295c017b/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
-72            <meta-data
-72-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
-73                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-73-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
-74                android:value="androidx.startup" />
-74-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
-75        </provider>
-76
-77        <receiver
-77-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
-78            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-78-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
-79            android:directBootAware="false"
-79-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
-80            android:enabled="true"
-80-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
-81            android:exported="true"
-81-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
-82            android:permission="android.permission.DUMP" >
-82-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
-83            <intent-filter>
-83-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
-84                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
-84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
-85            </intent-filter>
-86            <intent-filter>
-86-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
-87                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-87-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
-87-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
-88            </intent-filter>
-89            <intent-filter>
-89-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
-90                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-90-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
-90-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
-91            </intent-filter>
-92            <intent-filter>
-92-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
-93                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-93-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
-93-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/transforms-3/4dbbd11a74d28bd64c37893cccf57482/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
-94            </intent-filter>
-95        </receiver>
-96    </application>
-97
-98</manifest>
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:4:5-67
+11-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:4:22-64
+12    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+12-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:5:5-77
+12-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:5:22-74
+13    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+13-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:6:5-89
+13-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:6:22-86
+14    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+14-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:7:5-77
+14-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:7:22-74
+15    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+15-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:8:5-78
+15-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:8:22-75
+16    <uses-permission android:name="android.permission.WAKE_LOCK" />
+16-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:9:5-68
+16-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:9:22-65
+17    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+17-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:10:5-79
+17-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:10:22-76
+18    <uses-permission android:name="android.permission.VIBRATE" />
+18-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:11:5-66
+18-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:11:22-63
+19    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+19-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:12:5-71
+19-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:12:22-68
+20    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+20-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:13:5-80
+20-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:13:22-77
+21    <uses-permission
+21-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:14:5-108
+22        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+22-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:14:22-78
+23        android:maxSdkVersion="29" />
+23-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:14:79-105
+24    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+24-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:15:5-82
+24-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:15:22-79
+25
+26    <permission
+26-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/8.11.1/transforms/1e06eb28ee95b4fa76d200f136c18310/transformed/core-1.12.0/AndroidManifest.xml:22:5-24:47
+27        android:name="com.voicebot.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+27-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/8.11.1/transforms/1e06eb28ee95b4fa76d200f136c18310/transformed/core-1.12.0/AndroidManifest.xml:23:9-81
+28        android:protectionLevel="signature" />
+28-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/8.11.1/transforms/1e06eb28ee95b4fa76d200f136c18310/transformed/core-1.12.0/AndroidManifest.xml:24:9-44
+29
+30    <uses-permission android:name="com.voicebot.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+30-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/8.11.1/transforms/1e06eb28ee95b4fa76d200f136c18310/transformed/core-1.12.0/AndroidManifest.xml:26:5-97
+30-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/8.11.1/transforms/1e06eb28ee95b4fa76d200f136c18310/transformed/core-1.12.0/AndroidManifest.xml:26:22-94
+31
+32    <application
+32-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:17:5-46:19
+33        android:allowBackup="false"
+33-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:18:9-36
+34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+34-->[androidx.core:core:1.12.0] /Users/liubo/.gradle/caches/8.11.1/transforms/1e06eb28ee95b4fa76d200f136c18310/transformed/core-1.12.0/AndroidManifest.xml:28:18-86
+35        android:debuggable="true"
+36        android:extractNativeLibs="false"
+37        android:icon="@drawable/ic_launcher"
+37-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:19:9-45
+38        android:label="语音定时发送"
+38-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:20:9-31
+39        android:networkSecurityConfig="@xml/network_security_config"
+39-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:24:9-69
+40        android:requestLegacyExternalStorage="true"
+40-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:25:9-52
+41        android:roundIcon="@drawable/ic_launcher"
+41-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:21:9-50
+42        android:supportsRtl="true"
+42-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:22:9-35
+43        android:theme="@style/Theme.VoiceBot" >
+43-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:23:9-46
+44        <activity
+44-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:27:9-35:20
+45            android:name="com.voicebot.MainActivity"
+45-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:28:13-41
+46            android:exported="true"
+46-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:29:13-36
+47            android:theme="@style/Theme.VoiceBot" >
+47-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:30:13-50
+48            <intent-filter>
+48-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:31:13-34:29
+49                <action android:name="android.intent.action.MAIN" />
+49-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:32:17-69
+49-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:32:25-66
+50
+51                <category android:name="android.intent.category.LAUNCHER" />
+51-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:33:17-77
+51-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:33:27-74
+52            </intent-filter>
+53        </activity>
+54
+55        <service
+55-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:37:9-40:58
+56            android:name="com.voicebot.service.BotService"
+56-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:38:13-47
+57            android:exported="false"
+57-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:39:13-37
+58            android:foregroundServiceType="specialUse" />
+58-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:40:13-55
+59        <service
+59-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:42:9-44:40
+60            android:name="com.voicebot.service.OverlayService"
+60-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:43:13-51
+61            android:exported="false" />
+61-->/Users/liubo/Desktop/voice/VoiceBot/app/src/main/AndroidManifest.xml:44:13-37
+62
+63        <provider
+63-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/8.11.1/transforms/99cd32f030fda86dae048fe3ce9e0230/transformed/emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+64            android:name="androidx.startup.InitializationProvider"
+64-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/8.11.1/transforms/99cd32f030fda86dae048fe3ce9e0230/transformed/emoji2-1.2.0/AndroidManifest.xml:25:13-67
+65            android:authorities="com.voicebot.androidx-startup"
+65-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/8.11.1/transforms/99cd32f030fda86dae048fe3ce9e0230/transformed/emoji2-1.2.0/AndroidManifest.xml:26:13-68
+66            android:exported="false" >
+66-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/8.11.1/transforms/99cd32f030fda86dae048fe3ce9e0230/transformed/emoji2-1.2.0/AndroidManifest.xml:27:13-37
+67            <meta-data
+67-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/8.11.1/transforms/99cd32f030fda86dae048fe3ce9e0230/transformed/emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+68                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+68-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/8.11.1/transforms/99cd32f030fda86dae048fe3ce9e0230/transformed/emoji2-1.2.0/AndroidManifest.xml:30:17-75
+69                android:value="androidx.startup" />
+69-->[androidx.emoji2:emoji2:1.2.0] /Users/liubo/.gradle/caches/8.11.1/transforms/99cd32f030fda86dae048fe3ce9e0230/transformed/emoji2-1.2.0/AndroidManifest.xml:31:17-49
+70            <meta-data
+70-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/liubo/.gradle/caches/8.11.1/transforms/1df446f24266a72ad5759225ae67517e/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:29:13-31:52
+71                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+71-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/liubo/.gradle/caches/8.11.1/transforms/1df446f24266a72ad5759225ae67517e/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:30:17-78
+72                android:value="androidx.startup" />
+72-->[androidx.lifecycle:lifecycle-process:2.7.0] /Users/liubo/.gradle/caches/8.11.1/transforms/1df446f24266a72ad5759225ae67517e/transformed/lifecycle-process-2.7.0/AndroidManifest.xml:31:17-49
+73            <meta-data
+73-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:29:13-31:52
+74                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+74-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:30:17-85
+75                android:value="androidx.startup" />
+75-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:31:17-49
+76        </provider>
+77
+78        <receiver
+78-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:34:9-52:20
+79            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+79-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:35:13-76
+80            android:directBootAware="false"
+80-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:36:13-44
+81            android:enabled="true"
+81-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:37:13-35
+82            android:exported="true"
+82-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:38:13-36
+83            android:permission="android.permission.DUMP" >
+83-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:39:13-57
+84            <intent-filter>
+84-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:40:13-42:29
+85                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:17-91
+85-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:41:25-88
+86            </intent-filter>
+87            <intent-filter>
+87-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:43:13-45:29
+88                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:17-85
+88-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:44:25-82
+89            </intent-filter>
+90            <intent-filter>
+90-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:46:13-48:29
+91                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:17-88
+91-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:47:25-85
+92            </intent-filter>
+93            <intent-filter>
+93-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:49:13-51:29
+94                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:17-95
+94-->[androidx.profileinstaller:profileinstaller:1.3.0] /Users/liubo/.gradle/caches/8.11.1/transforms/2729cca9db219373e9796071ab55e364/transformed/profileinstaller-1.3.0/AndroidManifest.xml:50:25-92
+95            </intent-filter>
+96        </receiver>
+97    </application>
+98
+99</manifest>

@@ -1,14 +1,10 @@
 [
     {
-        "merged": "/Users/liubo/.gradle/daemon/8.5/com.voicebot.app-mergeDebugResources-32:/layout/activity_main.xml",
-        "source": "/Users/liubo/.gradle/daemon/8.5/com.voicebot.app-main-35:/layout/activity_main.xml"
-    },
-    {
         "merged": "com.voicebot.app-mergeDebugResources-32:/layout/activity_main.xml",
         "source": "com.voicebot.app-main-35:/layout/activity_main.xml"
     },
     {
-        "merged": "/Users/liubo/.gradle/daemon/8.5/com.voicebot.app-mergeDebugResources-32:/layout/overlay_calibrate.xml",
-        "source": "/Users/liubo/.gradle/daemon/8.5/com.voicebot.app-main-35:/layout/overlay_calibrate.xml"
+        "merged": "com.voicebot.app-mergeDebugResources-32:/layout/overlay_calibrate.xml",
+        "source": "com.voicebot.app-main-35:/layout/overlay_calibrate.xml"
     }
 ]

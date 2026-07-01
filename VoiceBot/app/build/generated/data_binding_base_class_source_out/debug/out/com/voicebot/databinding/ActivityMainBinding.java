@@ -67,6 +67,12 @@ public final class ActivityMainBinding implements ViewBinding {
   public final MaterialButton btnToggle;
 
   @NonNull
+  public final TextView countdownLabel;
+
+  @NonNull
+  public final Slider countdownSlider;
+
+  @NonNull
   public final TextView durationLabel;
 
   @NonNull
@@ -125,6 +131,7 @@ public final class ActivityMainBinding implements ViewBinding {
       @NonNull MaterialButton btnPresetPtt, @NonNull MaterialButton btnPushToPhantom,
       @NonNull MaterialButton btnRecordVoice, @NonNull MaterialButton btnTestPhantom,
       @NonNull MaterialButton btnTestTts, @NonNull MaterialButton btnToggle,
+      @NonNull TextView countdownLabel, @NonNull Slider countdownSlider,
       @NonNull TextView durationLabel, @NonNull Slider durationSlider,
       @NonNull TextView intervalLabel, @NonNull Slider intervalSlider,
       @NonNull MaterialButton methodInput, @NonNull MaterialButton methodSendevent,
@@ -149,6 +156,8 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnTestPhantom = btnTestPhantom;
     this.btnTestTts = btnTestTts;
     this.btnToggle = btnToggle;
+    this.countdownLabel = countdownLabel;
+    this.countdownSlider = countdownSlider;
     this.durationLabel = durationLabel;
     this.durationSlider = durationSlider;
     this.intervalLabel = intervalLabel;
@@ -279,6 +288,18 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.countdownLabel;
+      TextView countdownLabel = ViewBindings.findChildViewById(rootView, id);
+      if (countdownLabel == null) {
+        break missingId;
+      }
+
+      id = R.id.countdownSlider;
+      Slider countdownSlider = ViewBindings.findChildViewById(rootView, id);
+      if (countdownSlider == null) {
+        break missingId;
+      }
+
       id = R.id.durationLabel;
       TextView durationLabel = ViewBindings.findChildViewById(rootView, id);
       if (durationLabel == null) {
@@ -384,9 +405,10 @@ public final class ActivityMainBinding implements ViewBinding {
       return new ActivityMainBinding((ScrollView) rootView, actionJsonEdit, actionJsonLayout,
           actionList, btnApplyActions, btnCalibrate, btnCheckTts, btnPickAudio, btnPlayVoice,
           btnPresetPtt, btnPushToPhantom, btnRecordVoice, btnTestPhantom, btnTestTts, btnToggle,
-          durationLabel, durationSlider, intervalLabel, intervalSlider, methodInput,
-          methodSendevent, methodToggle, selectedAudioLabel, sourceFile, sourceToggle, sourceTts,
-          statusText, ttsInputLayout, ttsText, vmMaidmic, vmSpeaker, voiceMethodToggle);
+          countdownLabel, countdownSlider, durationLabel, durationSlider, intervalLabel,
+          intervalSlider, methodInput, methodSendevent, methodToggle, selectedAudioLabel,
+          sourceFile, sourceToggle, sourceTts, statusText, ttsInputLayout, ttsText, vmMaidmic,
+          vmSpeaker, voiceMethodToggle);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

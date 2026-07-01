@@ -17,6 +17,8 @@ id btnTestTts
 id btnToggle
 id closeOverlay
 id coordText
+id countdownLabel
+id countdownSlider
 id durationLabel
 id durationSlider
 id intervalLabel

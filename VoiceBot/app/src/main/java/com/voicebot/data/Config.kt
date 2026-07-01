@@ -26,6 +26,7 @@ data class VoiceMessage(
 
 data class BotConfig(
     val intervalSeconds: Int = 300,
+    val countdownSeconds: Int = 10,
     val actions: List<TapAction> = listOf(
         TapAction("Hold PTT", 540, 600, TapAction.ActionType.HOLD, 3000, 2000)
     ),
@@ -51,6 +52,7 @@ data class BotConfig(
         }
         return JSONObject().apply {
             put("intervalSeconds", intervalSeconds)
+            put("countdownSeconds", countdownSeconds)
             put("actions", arr)
             put("randomizeTaps", randomizeTaps)
             put("jitterPixels", jitterPixels)
@@ -90,6 +92,7 @@ data class BotConfig(
             }
             return BotConfig(
                 intervalSeconds = seconds,
+                countdownSeconds = obj.optInt("countdownSeconds", 10),
                 actions = actions,
                 randomizeTaps = obj.optBoolean("randomizeTaps", true),
                 jitterPixels = obj.optInt("jitterPixels", 3),

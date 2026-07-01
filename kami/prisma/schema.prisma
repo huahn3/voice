@@ -1,0 +1,196 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ============================================
+// 管理员用户
+// ============================================
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ============================================
+// 产品
+// ============================================
+model Product {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  description  String?
+  deliveryType String   @default("SCRIPT_DISPLAY") // DOWNLOAD_LINK, API_PULL, WEBHOOK, SCRIPT_DISPLAY
+  downloadUrl  String?
+  webhookUrl   String?
+  remoteConfig String   @default("{}") // JSON string for remote configuration
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  versions      ProductVersion[]
+  cardKeys      CardKey[]
+  announcements Announcement[]
+  apiKeys       ApiKey[]
+  encryptionKey String?  // AES key for script encryption
+}
+
+// ============================================
+// 产品版本
+// ============================================
+model ProductVersion {
+  id            String   @id @default(cuid())
+  productId     String
+  version       String
+  channel       String   @default("STABLE") // STABLE, BETA, DEV
+  scriptContent String?  // 脚本内容（加密存储）
+  releaseNotes  String?
+  forceUpdate   Boolean  @default(false)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, version, channel])
+}
+
+// ============================================
+// 卡密
+// ============================================
+model CardKey {
+  id          String    @id @default(cuid())
+  productId   String
+  key         String    @unique
+  type        String    @default("TIME") // TIME, COUNT, CREDIT
+  duration    Int?      // 有效时长（秒），TIME类型用
+  maxUses     Int?      // 最大使用次数，COUNT类型用
+  usedCount   Int       @default(0)
+  credits     Int?      // 剩余额度，CREDIT类型用
+  bindHwid    Boolean   @default(false)
+  boundHwid   String?
+  bindIp      Boolean   @default(false)
+  boundIp     String?
+  maxDevices  Int       @default(1)
+  status      String    @default("UNUSED") // UNUSED, ACTIVE, FROZEN, EXPIRED, BANNED
+  remark      String?
+  activatedAt DateTime?
+  expiresAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  verifyLogs VerifyLog[]
+}
+
+// ============================================
+// 验证日志
+// ============================================
+model VerifyLog {
+  id           String   @id @default(cuid())
+  cardKeyId    String?
+  cardKeyValue String?  // 保存卡密值，即使卡密被删除也能追溯
+  action       String   // VERIFY, ACTIVATE, HEARTBEAT, REVOKE
+  ip           String
+  hwid         String?
+  userAgent    String?
+  success      Boolean
+  failReason   String?
+  responseTime Int      @default(0) // 响应时间（毫秒）
+  createdAt    DateTime @default(now())
+
+  cardKey CardKey? @relation(fields: [cardKeyId], references: [id], onDelete: SetNull)
+}
+
+// ============================================
+// 公告
+// ============================================
+model Announcement {
+  id        String    @id @default(cuid())
+  productId String?   // null 表示全局公告
+  title     String
+  content   String
+  type      String    @default("INFO") // INFO, WARNING, CRITICAL
+  isActive  Boolean   @default(true)
+  startsAt  DateTime?
+  endsAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  product Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+// ============================================
+// 黑名单规则
+// ============================================
+model BlacklistRule {
+  id        String    @id @default(cuid())
+  type      String    // IP, HWID, IP_RANGE
+  value     String
+  reason    String?
+  expiresAt DateTime? // null 表示永久
+  createdAt DateTime  @default(now())
+
+  @@unique([type, value])
+}
+
+// ============================================
+// API 密钥
+// ============================================
+model ApiKey {
+  id          String    @id @default(cuid())
+  name        String
+  key         String    @unique
+  productId   String?   // null 表示全局
+  permissions String    @default("[]") // JSON array
+  isActive    Boolean   @default(true)
+  lastUsedAt  DateTime?
+  createdAt   DateTime  @default(now())
+
+  product Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+// ============================================
+// 系统配置
+// ============================================
+model SystemConfig {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================
+// 操作审计日志
+// ============================================
+model AuditLog {
+  id        String   @id @default(cuid())
+  adminId   String?  // 如果是由于管理员操作
+  action    String   // LOGIN, CREATE_PRODUCT, DELETE_CARD, etc.
+  target    String?  // 也就是操作对象 ID 或名称
+  details   String?  // JSON details
+  ip        String?
+  createdAt DateTime @default(now())
+}
+
+// ============================================
+// 登录尝试记录 (防爆破)
+// ============================================
+model LoginAttempt {
+  id          String    @id @default(cuid())
+  ip          String    @unique
+  username    String?   // 最后尝试的用户名
+  attempts    Int       @default(1)
+  isLocked    Boolean   @default(false)
+  lockedUntil DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}

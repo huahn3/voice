@@ -9,21 +9,32 @@ object TapEngine {
     private const val TAG = "TapEngine"
 
     fun execute(config: BotConfig): Boolean {
+        if (DegradationManager.shouldSkip()) {
+            Log.w(TAG, "退化跳过本次执行")
+            Thread.sleep(3000)
+            return true
+        }
+
         val method = config.useMethod
         for (action in config.actions) {
             Thread.sleep(action.delayAfterMs.toLong())
-            val (tx, ty) = if (config.randomizeTaps && config.jitterPixels > 0) {
-                val jx = (Random.nextInt(config.jitterPixels * 2 + 1) - config.jitterPixels)
-                val jy = (Random.nextInt(config.jitterPixels * 2 + 1) - config.jitterPixels)
-                Pair(action.x + jx, action.y + jy)
+
+            val driftX = DegradationManager.jitter(config.jitterPixels)
+            val driftY = DegradationManager.jitter(config.jitterPixels)
+            val tx = action.x + driftX
+            val ty = action.y + driftY
+
+            val modifiedAction = if (action.type == TapAction.ActionType.HOLD && DegradationManager.holdScale() < 1.0f) {
+                action.copy(holdMs = (action.holdMs * DegradationManager.holdScale()).toInt().coerceAtLeast(200))
             } else {
-                Pair(action.x, action.y)
+                action
             }
+
             when (method) {
-                BotConfig.TapMethod.INPUT -> inputMethod(tx, ty, action)
-                BotConfig.TapMethod.SENDEVENT -> sendeventMethod(tx, ty, action)
+                BotConfig.TapMethod.INPUT -> inputMethod(tx, ty, modifiedAction)
+                BotConfig.TapMethod.SENDEVENT -> sendeventMethod(tx, ty, modifiedAction)
             }
-            Log.d(TAG, "${action.label}: tap($tx,$ty) type=${action.type}")
+            Log.d(TAG, "${action.label}: tap($tx,$ty) drift=($driftX,$driftY) level=${DegradationManager.level}")
         }
         return true
     }
