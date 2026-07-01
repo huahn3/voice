@@ -128,6 +128,37 @@
                         android:textSize="11sp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
                 </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnTestPhantom"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:text="🎤 测试 PhantomMic (录音3秒)"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginTop="4dp">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnRecordVoice"
+                        android:layout_width="0dp" android:layout_height="40dp"
+                        android:layout_weight="1" android:text="🎤 录制语音"
+                        android:textSize="11sp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                    <Space android:layout_width="8dp" android:layout_height="1dp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPlayVoice"
+                        android:layout_width="0dp" android:layout_height="40dp"
+                        android:layout_weight="1" android:text="▶ 播放录音"
+                        android:textSize="11sp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                </LinearLayout>
+                <!-- Push to PhantomMic -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPushToPhantom"
+                    android:layout_width="match_parent" android:layout_height="40dp"
+                    android:text="📤 推送到虚拟麦克风"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
                 <TextView android:id="@+id/selectedAudioLabel"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:text="未选择音频文件"

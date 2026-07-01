@@ -1,7 +1,10 @@
 package com.voicebot
 
 import android.content.Intent
+import android.media.AudioFormat
+import android.media.AudioRecord
 import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -33,6 +36,16 @@ class MainActivity : AppCompatActivity() {
     private var isOverlayShowing = false
     private var testPlayer: MediaPlayer? = null
 
+    // Recording variables
+    private var isRecording = false
+    private var audioRecord: AudioRecord? = null
+    private var recordingThread: Thread? = null
+    private var actualSampleRate = 44100  // 自适应确定后的采样率
+    private val channelConfig = AudioFormat.CHANNEL_IN_MONO
+    private val audioFormat = AudioFormat.ENCODING_PCM_16BIT
+    private var tempPcmFile: File? = null
+    private var finalWavFile: File? = null
+
     private val overlayPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { checkOverlayPermission() }
@@ -45,6 +58,16 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.GetContent()
     ) { uri ->
         uri?.let { selectAudioFile(it) }
+    }
+
+    private val recordAudioPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            runPhantomMicTest()
+        } else {
+            Toast.makeText(this, "需要录音权限才能测试虚拟麦克风", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -166,9 +189,33 @@ class MainActivity : AppCompatActivity() {
             showTtsStatus()
         }
 
+        // PhantomMic test button
+        findViewById<com.google.android.material.button.MaterialButton>(R.id.btnTestPhantom).setOnClickListener {
+            testPhantomMic()
+        }
+
         // Pick audio file
         findViewById<com.google.android.material.button.MaterialButton>(R.id.btnPickAudio).setOnClickListener {
             audioPickerLauncher.launch("audio/*")
+        }
+
+        // Record Voice button
+        findViewById<com.google.android.material.button.MaterialButton>(R.id.btnRecordVoice).setOnClickListener {
+            if (isRecording) {
+                stopRecordingVoice()
+            } else {
+                startRecordingVoice()
+            }
+        }
+
+        // Play recorded Voice button
+        findViewById<com.google.android.material.button.MaterialButton>(R.id.btnPlayVoice).setOnClickListener {
+            playRecordedVoice()
+        }
+
+        // Push to PhantomMic virtual mic
+        findViewById<com.google.android.material.button.MaterialButton>(R.id.btnPushToPhantom).setOnClickListener {
+            pushCurrentAudioToPhantom()
         }
 
         // Duration slider
@@ -299,6 +346,81 @@ class MainActivity : AppCompatActivity() {
                     else if (secs % 60 == 0) "${secs / 60} 分钟"
                     else "${secs / 60}分${secs % 60}秒"
         findViewById<android.widget.TextView>(R.id.intervalLabel).text = label
+    }
+
+    private fun testPhantomMic() {
+        saveTtsText()
+        if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO)
+            != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            recordAudioPermissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
+        } else {
+            runPhantomMicTest()
+        }
+    }
+
+    private fun runPhantomMicTest() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val (recorder, usedSampleRate) = createAdaptiveAudioRecord()
+                if (recorder == null) {
+                    runOnUiThread {
+                        AlertDialog.Builder(this@MainActivity)
+                            .setTitle("录音初始化失败")
+                            .setMessage("无法初始化麦克风，请检查：\n1. 模拟器 Extended Controls > Microphone > Enable Host Microphone Access 已开\n2. 应用展开录音权限\n3. 设置 > 应用程序 > VoiceBot > 权限 > 麦克风 = 允许")
+                            .setPositiveButton("确定", null)
+                            .show()
+                    }
+                    return@launch
+                }
+                val bufferSize = AudioRecord.getMinBufferSize(usedSampleRate,
+                    AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
+                val buf = ByteArray(bufferSize.coerceAtLeast(4096))
+                recorder.startRecording()
+                runOnUiThread { Toast.makeText(this@MainActivity, "正在录音3秒...", Toast.LENGTH_SHORT).show() }
+                val startTime = System.currentTimeMillis()
+                var totalRead = 0
+                var maxAbsVal = 0
+                while (System.currentTimeMillis() - startTime < 3000) {
+                    val read = recorder.read(buf, 0, buf.size)
+                    if (read > 0) {
+                        totalRead += read
+                        for (i in 0 until read step 2) {
+                            if (i + 1 < read) {
+                                val sample = ((buf[i+1].toInt() shl 8) or (buf[i].toInt() and 0xFF)).toShort().toInt()
+                                if (Math.abs(sample) > maxAbsVal) maxAbsVal = Math.abs(sample)
+                            }
+                        }
+                    }
+                }
+                recorder.stop()
+                recorder.release()
+                val hasAudio = maxAbsVal > 100
+                val msg = buildString {
+                    appendLine("采样率: ${usedSampleRate}Hz")
+                    appendLine("录音完成: $totalRead bytes")
+                    appendLine("最大信号幅: $maxAbsVal")
+                    appendLine("")
+                    appendLine("结果: ${if (hasAudio) "✅ 检测到音频信号" else "❌ 全部静音"}")
+                    if (hasAudio) appendLine("PhantomMic 注入工作正常！")
+                    else appendLine("建议：确认 /sdcard/phantom/voice.wav 已写入，且 phantom.txt 内容为 voice.wav")
+                }
+                runOnUiThread {
+                    AlertDialog.Builder(this@MainActivity)
+                        .setTitle("PhantomMic 测试")
+                        .setMessage(msg)
+                        .setPositiveButton("确定", null)
+                        .show()
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    AlertDialog.Builder(this@MainActivity)
+                        .setTitle("测试失败")
+                        .setMessage("${e.javaClass.simpleName}: ${e.message}")
+                        .setPositiveButton("确定", null)
+                        .show()
+                }
+            }
+        }
     }
 
     private fun showTtsStatus() {
@@ -433,6 +555,252 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         testPlayer?.release()
         if (isOverlayShowing) stopService(Intent(this, OverlayService::class.java))
+        if (isRecording) {
+            isRecording = false
+            audioRecord?.release()
+        }
         super.onDestroy()
     }
+
+    private fun startRecordingVoice() {
+        if (androidx.core.content.ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO)
+            != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            recordAudioPermissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
+            return
+        }
+        
+        CoroutineScope(Dispatchers.IO).launch {
+            val (rec, usedSampleRate) = createAdaptiveAudioRecord()
+            if (rec == null) {
+                runOnUiThread {
+                    AlertDialog.Builder(this@MainActivity)
+                        .setTitle("录音初始化失败")
+                        .setMessage("无法初始化麦克风，请检查模拟器麦克风配置和录音权限")
+                        .setPositiveButton("确定", null)
+                        .show()
+                }
+                return@launch
+            }
+            actualSampleRate = usedSampleRate
+            audioRecord = rec
+            tempPcmFile = File(cacheDir, "temp_voice.pcm")
+            finalWavFile = File(cacheDir, "recorded_voice.wav")
+            audioRecord?.startRecording()
+            isRecording = true
+            runOnUiThread {
+                findViewById<com.google.android.material.button.MaterialButton>(R.id.btnRecordVoice).text = "⏹ 停止录音"
+                Toast.makeText(this@MainActivity, "正在录音 (${usedSampleRate}Hz)...", Toast.LENGTH_SHORT).show()
+            }
+            recordingThread = Thread({ writeAudioDataToFile() }, "voicebot-recorder")
+            recordingThread?.start()
+        }
+    }
+
+    private fun writeAudioDataToFile() {
+        val minBufSize = AudioRecord.getMinBufferSize(actualSampleRate, channelConfig, audioFormat)
+        val data = ByteArray(minBufSize.coerceAtLeast(4096))
+        var fileOutputStream: java.io.FileOutputStream? = null
+        try {
+            fileOutputStream = java.io.FileOutputStream(tempPcmFile)
+            while (isRecording) {
+                val read = audioRecord?.read(data, 0, data.size) ?: 0
+                if (read > 0) {
+                    fileOutputStream.write(data, 0, read)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try { fileOutputStream?.close() } catch (_: Exception) {}
+        }
+    }
+
+    /**
+     * 自适应多采样率创建 AudioRecord。
+     * 退避对特定采样率的 AVD 驱动限制，依次尝试 44100/16000/48000/8000 Hz。
+     * 返回 Pair：（AudioRecord 实例 or null，实际采样率）
+     */
+    private fun createAdaptiveAudioRecord(): Pair<AudioRecord?, Int> {
+        val candidateRates = listOf(44100, 16000, 48000, 8000)
+        for (rate in candidateRates) {
+            try {
+                val minBuf = AudioRecord.getMinBufferSize(rate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)
+                if (minBuf <= 0) continue
+                val rec = AudioRecord(
+                    MediaRecorder.AudioSource.MIC,
+                    rate,
+                    AudioFormat.CHANNEL_IN_MONO,
+                    AudioFormat.ENCODING_PCM_16BIT,
+                    minBuf * 4
+                )
+                if (rec.state == AudioRecord.STATE_INITIALIZED) {
+                    return Pair(rec, rate)
+                }
+                try { rec.release() } catch (_: Exception) {}
+            } catch (_: Exception) {}
+        }
+        return Pair(null, 0)
+    }
+
+    private fun stopRecordingVoice() {
+        isRecording = false
+        audioRecord?.apply {
+            try {
+                stop()
+            } catch (_: Exception) {}
+            release()
+        }
+        audioRecord = null
+        try { recordingThread?.join(1000) } catch (_: Exception) {}
+        recordingThread = null
+        
+        findViewById<com.google.android.material.button.MaterialButton>(R.id.btnRecordVoice).text = "🎤 录制语音"
+        
+        // Convert to WAV
+        val pFile = tempPcmFile
+        val wFile = finalWavFile
+        if (pFile != null && pFile.exists() && wFile != null) {
+            convertPcmToWav(pFile, wFile)
+            try { pFile.delete() } catch (_: Exception) {}
+            
+            // Auto update config file path
+            config = config.copy(voice = config.voice.copy(
+                audioFilePath = wFile.absolutePath,
+                ttsEnabled = false
+            ))
+            ConfigStore.save(this, config)
+            refreshUI()
+            Toast.makeText(this, "录音已保存并选为发送源", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun convertPcmToWav(pcmFile: File, wavFile: File) {
+        val pcmSize = pcmFile.length()
+        val wavSize = pcmSize + 36
+        val sampleRateLong = actualSampleRate.toLong()
+        val channels = 1
+        val byteRate = (actualSampleRate * channels * 16 / 8).toLong()
+        
+        val header = ByteArray(44)
+        header[0] = 'R'.code.toByte() // RIFF
+        header[1] = 'I'.code.toByte()
+        header[2] = 'F'.code.toByte()
+        header[3] = 'F'.code.toByte()
+        header[4] = (wavSize and 0xff).toByte()
+        header[5] = ((wavSize shr 8) and 0xff).toByte()
+        header[6] = ((wavSize shr 16) and 0xff).toByte()
+        header[7] = ((wavSize shr 24) and 0xff).toByte()
+        header[8] = 'W'.code.toByte()
+        header[9] = 'A'.code.toByte()
+        header[10] = 'V'.code.toByte()
+        header[11] = 'E'.code.toByte()
+        header[12] = 'f'.code.toByte() // fmt 
+        header[13] = 'm'.code.toByte()
+        header[14] = 't'.code.toByte()
+        header[15] = ' '.code.toByte()
+        header[16] = 16 // size of fmt chunk
+        header[17] = 0
+        header[18] = 0
+        header[19] = 0
+        header[20] = 1 // format = 1 (PCM)
+        header[21] = 0
+        header[22] = channels.toByte()
+        header[23] = 0
+        header[24] = (sampleRateLong and 0xff).toByte()
+        header[25] = ((sampleRateLong shr 8) and 0xff).toByte()
+        header[26] = ((sampleRateLong shr 16) and 0xff).toByte()
+        header[27] = ((sampleRateLong shr 24) and 0xff).toByte()
+        header[28] = (byteRate and 0xff).toByte()
+        header[29] = ((byteRate shr 8) and 0xff).toByte()
+        header[30] = ((byteRate shr 16) and 0xff).toByte()
+        header[31] = ((byteRate shr 24) and 0xff).toByte()
+        header[32] = (channels * 16 / 8).toByte() // block align
+        header[33] = 0
+        header[34] = 16 // bits per sample
+        header[35] = 0
+        header[36] = 'd'.code.toByte() // data
+        header[37] = 'a'.code.toByte()
+        header[38] = 't'.code.toByte()
+        header[39] = 'a'.code.toByte()
+        header[40] = (pcmSize and 0xff).toByte()
+        header[41] = ((pcmSize shr 8) and 0xff).toByte()
+        header[42] = ((pcmSize shr 16) and 0xff).toByte()
+        header[43] = ((pcmSize shr 24) and 0xff).toByte()
+        
+        var fIn: java.io.FileInputStream? = null
+        var fOut: java.io.FileOutputStream? = null
+        try {
+            fIn = java.io.FileInputStream(pcmFile)
+            fOut = java.io.FileOutputStream(wavFile)
+            fOut.write(header)
+            val buffer = ByteArray(1024)
+            var bytesRead = fIn.read(buffer)
+            while (bytesRead != -1) {
+                fOut.write(buffer, 0, bytesRead)
+                bytesRead = fIn.read(buffer)
+            }
+        } finally {
+            try { fIn?.close() } catch (_: Exception) {}
+            try { fOut?.close() } catch (_: Exception) {}
+        }
+    }
+
+    private fun playRecordedVoice() {
+        val file = finalWavFile ?: File(cacheDir, "recorded_voice.wav")
+        if (file.exists()) {
+            playAudioFile(file)
+        } else {
+            Toast.makeText(this, "未找到录音文件", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * 将当前选定的音频文件推送到 /sdcard/phantom/voice.wav，
+     * 使 PhantomMic 立即将其作为虚拟麦克风音源注入给所有被 Hook 的录音应用。
+     */
+    private fun pushCurrentAudioToPhantom() {
+        // 优先取已录制的 WAV，其次取 config 中配置的文件
+        val srcFile: File? = when {
+            finalWavFile?.exists() == true -> finalWavFile
+            config.voice.audioFilePath.isNotBlank() -> File(config.voice.audioFilePath).takeIf { it.exists() }
+            else -> null
+        }
+        if (srcFile == null) {
+            Toast.makeText(this, "请先录制语音或选择音频文件", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val targetPath = "/sdcard/phantom/voice.wav"
+                val configPath = "/sdcard/phantom/phantom.txt"
+
+                // 建目录
+                Shell.exec("mkdir -p /sdcard/phantom", asRoot = true)
+                // 复制文件
+                val cpResult = Shell.exec("cp \"${srcFile.absolutePath}\" \"$targetPath\"", asRoot = true)
+                if (!cpResult.success) {
+                    // Root cp 失败时直接用 Kotlin 复制
+                    srcFile.copyTo(File(targetPath), overwrite = true)
+                }
+                // 写 phantom.txt
+                Shell.exec("echo -n \"voice.wav\" > \"$configPath\"", asRoot = true)
+                // 开放权限
+                Shell.exec("chmod 666 \"$targetPath\" \"$configPath\"", asRoot = true)
+
+                runOnUiThread {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "✅ 已推送到虚拟麦克风！\n打开录音 App 即可录到预设语音",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, "推送失败: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 }
+

@@ -3180,7 +3180,11 @@ id btnApplyActions
 id btnCalibrate
 id btnCheckTts
 id btnPickAudio
+id btnPlayVoice
 id btnPresetPtt
+id btnPushToPhantom
+id btnRecordVoice
+id btnTestPhantom
 id btnTestTts
 id btnToggle
 id buttonPanel

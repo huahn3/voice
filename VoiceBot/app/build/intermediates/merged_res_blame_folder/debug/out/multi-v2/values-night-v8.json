@@ -4,7 +4,7 @@
             "outputFile": "com.voicebot.app-mergeDebugResources-31:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/liubo/.gradle/caches/8.11.1/transforms/b78a724cb75179cddcd3a56de4e47185/transformed/material-1.11.0/res/values-night-v8/values-night-v8.xml",
+                    "source": "/Users/liubo/.gradle/caches/transforms-3/3c6da16fc08c5e7b7caed394bbbfefaa/transformed/material-1.11.0/res/values-night-v8/values-night-v8.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/liubo/.gradle/caches/8.11.1/transforms/13e8e940bcf48cbfe392a7c8b464a129/transformed/appcompat-1.6.1/res/values-night-v8/values-night-v8.xml",
+                    "source": "/Users/liubo/.gradle/caches/transforms-3/9756fab58daf3b55028a539310104216/transformed/appcompat-1.6.1/res/values-night-v8/values-night-v8.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

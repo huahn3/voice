@@ -46,7 +46,19 @@ public final class ActivityMainBinding implements ViewBinding {
   public final MaterialButton btnPickAudio;
 
   @NonNull
+  public final MaterialButton btnPlayVoice;
+
+  @NonNull
   public final MaterialButton btnPresetPtt;
+
+  @NonNull
+  public final MaterialButton btnPushToPhantom;
+
+  @NonNull
+  public final MaterialButton btnRecordVoice;
+
+  @NonNull
+  public final MaterialButton btnTestPhantom;
 
   @NonNull
   public final MaterialButton btnTestTts;
@@ -109,7 +121,9 @@ public final class ActivityMainBinding implements ViewBinding {
       @NonNull TextInputEditText actionJsonEdit, @NonNull TextInputLayout actionJsonLayout,
       @NonNull TextView actionList, @NonNull MaterialButton btnApplyActions,
       @NonNull MaterialButton btnCalibrate, @NonNull MaterialButton btnCheckTts,
-      @NonNull MaterialButton btnPickAudio, @NonNull MaterialButton btnPresetPtt,
+      @NonNull MaterialButton btnPickAudio, @NonNull MaterialButton btnPlayVoice,
+      @NonNull MaterialButton btnPresetPtt, @NonNull MaterialButton btnPushToPhantom,
+      @NonNull MaterialButton btnRecordVoice, @NonNull MaterialButton btnTestPhantom,
       @NonNull MaterialButton btnTestTts, @NonNull MaterialButton btnToggle,
       @NonNull TextView durationLabel, @NonNull Slider durationSlider,
       @NonNull TextView intervalLabel, @NonNull Slider intervalSlider,
@@ -128,7 +142,11 @@ public final class ActivityMainBinding implements ViewBinding {
     this.btnCalibrate = btnCalibrate;
     this.btnCheckTts = btnCheckTts;
     this.btnPickAudio = btnPickAudio;
+    this.btnPlayVoice = btnPlayVoice;
     this.btnPresetPtt = btnPresetPtt;
+    this.btnPushToPhantom = btnPushToPhantom;
+    this.btnRecordVoice = btnRecordVoice;
+    this.btnTestPhantom = btnTestPhantom;
     this.btnTestTts = btnTestTts;
     this.btnToggle = btnToggle;
     this.durationLabel = durationLabel;
@@ -219,9 +237,33 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnPlayVoice;
+      MaterialButton btnPlayVoice = ViewBindings.findChildViewById(rootView, id);
+      if (btnPlayVoice == null) {
+        break missingId;
+      }
+
       id = R.id.btnPresetPtt;
       MaterialButton btnPresetPtt = ViewBindings.findChildViewById(rootView, id);
       if (btnPresetPtt == null) {
+        break missingId;
+      }
+
+      id = R.id.btnPushToPhantom;
+      MaterialButton btnPushToPhantom = ViewBindings.findChildViewById(rootView, id);
+      if (btnPushToPhantom == null) {
+        break missingId;
+      }
+
+      id = R.id.btnRecordVoice;
+      MaterialButton btnRecordVoice = ViewBindings.findChildViewById(rootView, id);
+      if (btnRecordVoice == null) {
+        break missingId;
+      }
+
+      id = R.id.btnTestPhantom;
+      MaterialButton btnTestPhantom = ViewBindings.findChildViewById(rootView, id);
+      if (btnTestPhantom == null) {
         break missingId;
       }
 
@@ -340,10 +382,11 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       return new ActivityMainBinding((ScrollView) rootView, actionJsonEdit, actionJsonLayout,
-          actionList, btnApplyActions, btnCalibrate, btnCheckTts, btnPickAudio, btnPresetPtt,
-          btnTestTts, btnToggle, durationLabel, durationSlider, intervalLabel, intervalSlider,
-          methodInput, methodSendevent, methodToggle, selectedAudioLabel, sourceFile, sourceToggle,
-          sourceTts, statusText, ttsInputLayout, ttsText, vmMaidmic, vmSpeaker, voiceMethodToggle);
+          actionList, btnApplyActions, btnCalibrate, btnCheckTts, btnPickAudio, btnPlayVoice,
+          btnPresetPtt, btnPushToPhantom, btnRecordVoice, btnTestPhantom, btnTestTts, btnToggle,
+          durationLabel, durationSlider, intervalLabel, intervalSlider, methodInput,
+          methodSendevent, methodToggle, selectedAudioLabel, sourceFile, sourceToggle, sourceTts,
+          statusText, ttsInputLayout, ttsText, vmMaidmic, vmSpeaker, voiceMethodToggle);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

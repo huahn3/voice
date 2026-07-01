@@ -164,14 +164,34 @@ class BotService : Service() {
 
     private fun copyToMaidMic(audioFile: File) {
         try {
-            val maidDir = File("/sdcard/phantom")
-            if (!maidDir.exists()) maidDir.mkdirs()
-            val target = File(maidDir, "voice.wav")
-            audioFile.copyTo(target, overwrite = true)
-            File(maidDir, "phantom.txt").writeText("voice.wav")
-            Shell.exec("chmod 777 ${target.absolutePath}", asRoot = true)
-            Shell.exec("chmod 777 ${File(maidDir, "phantom.txt").absolutePath}", asRoot = true)
-            Log.d(TAG, "Copied to MaidMic: ${target.absolutePath}")
+            val targetPath = "/sdcard/phantom/voice.wav"
+            val configPath = "/sdcard/phantom/phantom.txt"
+            
+            // 1. 先用 Root 确保创建目录
+            Shell.exec("mkdir -p /sdcard/phantom", asRoot = true)
+            
+            // 2. 将本应用私有目录下的 audioFile 拷贝到 /sdcard/phantom/voice.wav
+            // 使用 root 权限的 cp 命令进行拷贝，完全绕过 Scoped Storage 限制
+            val cpResult = Shell.exec("cp \"${audioFile.absolutePath}\" \"$targetPath\"", asRoot = true)
+            if (!cpResult.success) {
+                Log.w(TAG, "Root cp failed: ${cpResult.stderr}, trying fallback Kotlin copy")
+                // fallback 到普通的 Kotlin 拷贝（若设备没有 Root）
+                val target = File(targetPath)
+                audioFile.copyTo(target, overwrite = true)
+            }
+            
+            // 3. 写入 phantom.txt 配置
+            // 用 root 写入以规避分区存储限制，如果失败则回退到 Kotlin 直接写入
+            val echoResult = Shell.exec("echo -n \"voice.wav\" > \"$configPath\"", asRoot = true)
+            if (!echoResult.success) {
+                Log.w(TAG, "Root echo failed: ${echoResult.stderr}, trying fallback Kotlin write")
+                File(configPath).writeText("voice.wav")
+            }
+            
+            // 4. 赋予 777 权限以便 PhantomMic 读取
+            Shell.exec("chmod 777 \"$targetPath\"", asRoot = true)
+            Shell.exec("chmod 777 \"$configPath\"", asRoot = true)
+            Log.d(TAG, "Copied to MaidMic successfully via Root/Fallback")
         } catch (e: Exception) {
             Log.e(TAG, "MaidMic copy failed", e)
         }
